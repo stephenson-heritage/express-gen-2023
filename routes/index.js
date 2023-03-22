@@ -3,7 +3,10 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-	res.render('index', { title: 'My Cite' });
+	res.render('index', {
+		title: 'My Cite',
+		name: req.login.auth ? req.login.username : "guest"
+	});
 });
 
 router.all('/', function (req, res, next) {
@@ -19,7 +22,7 @@ router.get('/cats?ndogs?', function (req, res, next) {
 // });
 
 router.get('/c(at)+s', function (req, res, next) {
-	res.render('index', { title: "catatatata....", name: "Dan" });
+	res.render('index', { title: "catatatata....", name: req.username });
 });
 
 
