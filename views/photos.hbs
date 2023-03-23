@@ -2,8 +2,11 @@
 	{{#each this}}
 		{{#if filename}}
 			<div class="gallery-photo">
-				<img src="/images/gallery/{{filename}}" />
+				<a href="./photo/{{photo_id}}">
+					<img src="/images/gallery/{{filename}}" />
+				</a>
 				<p>{{description}}</p>
+
 			</div>
 		{{/if}}
 	{{/each}}

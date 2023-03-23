@@ -18,6 +18,6 @@ a {
 	min-width: 200px;
 }
 
-.gallery .gallery-photo>img {
+.gallery .gallery-photo img {
 	width: 100%;
 }
