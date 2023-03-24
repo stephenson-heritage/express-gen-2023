@@ -9,6 +9,11 @@ const booksRouter = require('./routes/books');
 const photoRouter = require('./routes/photo');
 const app = express();
 
+const hbs = require('hbs');
+
+// register partials
+hbs.registerPartials(__dirname + '/views/partials');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');

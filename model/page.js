@@ -2,6 +2,7 @@ const db = require('../config/db');
 
 module.exports = {
 
+	// method to retrieve a page from the database
 	'getPage': async function (key) { // key ==> care
 		let conn = await db.getConnection();
 		key = key.toLowerCase();
@@ -30,6 +31,11 @@ module.exports = {
 		}
 
 
+	},
+	'getMenuItems': async function () {
+		let conn = await db.getConnection();
+		const result = await conn.query("select page_id,title,`key` from page where menu_order is not null order by menu_order");
+		conn.end();
+		return result;
 	}
-
 };
