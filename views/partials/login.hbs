@@ -1,5 +1,5 @@
 {{#if login.loggedIn}}
-	Welcome back {{login.user.username}}
+	<div class="loggedin">Welcome back {{login.user.username}}, <a href="?logout">Logout</a></div>
 {{else}}
 	<form action="/login" method="post">
 		<input type="hidden" name="action" value="login"> {{!-- ?action=login --}}
