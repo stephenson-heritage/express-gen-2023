@@ -4,12 +4,13 @@
 	"private": true,
 	"scripts": {
 		"start": "node ./bin/www",
-		"dev": "set PORT=9000 & set DEBUG=myapp:* & nodemon start -e js,hbs"
+		"dev": "set PORT=9000 & set DEBUG=myapp:* & npx nodemon start -e js,hbs"
 	},
 	"dependencies": {
 		"cookie-parser": "~1.4.4",
 		"debug": "~2.6.9",
 		"express": "^4.18.2",
+		"express-fileupload": "^1.4.0",
 		"hbs": "^4.2.0",
 		"http-errors": "~1.6.3",
 		"mariadb": "^3.1.1",

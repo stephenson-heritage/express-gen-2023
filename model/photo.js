@@ -27,6 +27,15 @@ let photo = {
 		};
 
 		return ret;
+	},
+	'addPhoto': async function (filename, description) {
+		let conn = await db.getConnection();
+		const result = await conn.query(
+			"insert into photo (filename, description) values (?,?)",
+			[filename, description]);
+
+		conn.end();
+		return result;
 	}
 
 };

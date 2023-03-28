@@ -1,14 +1,17 @@
 {{> menu}}
+{{#if login.loggedIn}}
+<a href="/photo/add">Add Photo</a>
+{{/if}}
 <div class="gallery">
 	{{#each data}}
-		{{!-- data is a member of the passed data structure, should include the rows from db table "photo" --}}
-		{{#if filename}}
-			<div class="gallery-photo">
-				<a href="./photo/{{photo_id}}">
-					<img src="/images/gallery/{{filename}}" />
-				</a>
-				<p>{{description}}</p>
-			</div>
-		{{/if}}
+	{{!-- data is a member of the passed data structure, should include the rows from db table "photo" --}}
+	{{#if filename}}
+	<div class="gallery-photo">
+		<a href="./photo/{{photo_id}}">
+			<img src="/images/gallery/{{filename}}" />
+		</a>
+		<p>{{description}}</p>
+	</div>
+	{{/if}}
 	{{/each}}
 </div>
