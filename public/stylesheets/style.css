@@ -32,3 +32,8 @@ a {
 	background-size: cover;
 	background-position: no-repeat center;
 }
+
+form.page-edit textarea {
+	width: 80%;
+	height: 300px;
+}
