@@ -1,4 +1,3 @@
-
 const defaultPage = 'index';
 
 const router = require('express').Router();
