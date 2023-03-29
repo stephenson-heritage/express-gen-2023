@@ -4,9 +4,12 @@
 	"private": true,
 	"scripts": {
 		"start": "node ./bin/www",
-		"dev": "set PORT=9000 & set DEBUG=myapp:* & npx nodemon start -e js,hbs"
+		"dev": "set PORT=9000 & set DEBUG=myapp:* & npx nodemon start -e js,hbs",
+		"test": "mocha -R spec --exit",
+		"dump": "mysqldump -u root -p --databases express_checkout > ./database/db.sql"
 	},
 	"dependencies": {
+		"chai": "^4.3.7",
 		"cookie-parser": "~1.4.4",
 		"debug": "~2.6.9",
 		"express": "^4.18.2",
@@ -14,6 +17,10 @@
 		"hbs": "^4.2.0",
 		"http-errors": "~1.6.3",
 		"mariadb": "^3.1.1",
+		"mocha": "^10.2.0",
 		"morgan": "~1.9.1"
+	},
+	"devDependencies": {
+		"request": "^2.88.2"
 	}
 }

@@ -38,21 +38,48 @@ module.exports = {
 		conn.end();
 		return result;
 	},
-	'updatePage': async function (key, title, content) {
+	'updatePage': async function (key, user_id, title, content) {
 		let conn = await db.getConnection();
 		key = key.toLowerCase();
 		const result = await conn.query(
 			"update page set title = ?, content = ? where `key` = ?",
 			[title, content, key]);
 		conn.end();
+
+		let connHistory = await db.getConnection();
+		const resultHistory = await connHistory.query(
+			"INSERT INTO page_history (page_key,user_id,content) VALUES(?, ?, ?)",
+			[key, user_id, content]);
 		return result;
 	},
-	'addPage': async function (key, title, content, menu_order = 1) {
+	'addPage': async function (key, user_id, title, content, menu_order = 1) {
+		let conn = await db.getConnection();
+		key = key.toLowerCase();
+		if (key == "" || title == "") {
+			return false;
+		}
+		let result = false;
+		try {
+			result = await conn.query(
+				"insert into page (`key`,title,content,menu_order) values (?,?,?,?)",
+				[key, title, content, menu_order]);
+
+			let connHistory = await db.getConnection();
+			const resultHistory = await connHistory.query(
+				"INSERT INTO page_history (page_key,user_id,content) VALUES(?, ?, ?)",
+				[key, user_id, content]);
+		} catch (e) {
+			console.log(e);
+		}
+		conn.end();
+		return result;
+	},
+	'deletePage': async function (key) {
 		let conn = await db.getConnection();
 		key = key.toLowerCase();
 		const result = await conn.query(
-			"insert into page (`key`,title,content,menu_order) values (?,?,?,?)",
-			[key, title, content, menu_order]);
+			"delete from page where `key` = ?",
+			[key]);
 		conn.end();
 		return result;
 	}
