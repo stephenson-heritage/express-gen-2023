@@ -46,5 +46,14 @@ module.exports = {
 			[title, content, key]);
 		conn.end();
 		return result;
+	},
+	'addPage': async function (key, title, content, menu_order = 1) {
+		let conn = await db.getConnection();
+		key = key.toLowerCase();
+		const result = await conn.query(
+			"insert into page (`key`,title,content,menu_order) values (?,?,?,?)",
+			[key, title, content, menu_order]);
+		conn.end();
+		return result;
 	}
 };

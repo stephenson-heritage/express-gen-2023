@@ -10,6 +10,31 @@ router.get('/', function (req, res, next) {
 router.get('/:key/edit', async function (req, res, next) {
 	loadPage('editPage', req.params.key, req, res, next);
 });
+
+router.get('/addpage', async function (req, res, next) {
+
+	const menuItems = await page.getMenuItems(); // retrieve the menu items
+	//console.log(menuItems);
+	// there is a matching page (with key ==> "care")
+	res.render('addPage', { // render template 'index.hbs', send the page title, page content
+		menu: menuItems,
+		login: req.login,
+		redirect: req.baseUrl + req.path
+	});
+
+});
+
+router.post('/addpage', async function (req, res, next) {
+
+	if (req.login.loggedIn) {
+		let title = req.body.title;
+		let content = req.body.content;
+		let key = req.body.key.toLowerCase().replace(/s/g, '');
+		page.addPage(key, title, content);
+	}
+
+	res.redirect('/');
+});
 router.post('/:key/edit', async function (req, res, next) {
 
 	if (req.login.loggedIn) {
