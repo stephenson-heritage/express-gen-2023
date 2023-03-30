@@ -9,7 +9,7 @@ module.exports = {
 		return result.length > 0;
 	},
 	'addUser': async function (username, email, password) {
-		if (!this.isUser(username)) {
+		if (!await this.isUser(username)) {
 			let conn = await db.getConnection();
 
 			// hash the password 
@@ -18,10 +18,29 @@ module.exports = {
 			// digest outputs it to a value
 			const passHash = (crypto.createHash('sha256')).update(password).digest('base64');
 
+			const validateCode = (crypto.createHash('sha256')).update('' + Math.random() * 99999999999999).digest('base64');
 
-			const result = await conn.query("insert into user (username, email, passHash) values (?,?,?)", [username, email, passHash]);
+
+			const result = await conn.query("insert into user (username, email, passHash, validate_code) values (?,?,?,?)", [username, email, passHash, validateCode]);
 			conn.end();
+			result.code = validateCode;
+
+			result.user = { username: username, email: email, user_id: result.insertId };
+
 			return result;
+		} else {
+			return false;
+		}
+	},
+	'validateUser': async function (user_id, code) {
+		let conn = await db.getConnection();
+		console.log(user_id, code);
+		const result = await conn.query("select user_id from user where user_id = ? and validate_code = ?", [user_id, code]);
+		conn.end();
+		if (result.length > 0) {
+			conn = await db.getConnection();
+			const result = await conn.query("update user set validate_code = null where user_id = ?", [user_id]);
+			return true;
 		} else {
 			return false;
 		}
@@ -38,7 +57,7 @@ module.exports = {
 		const cookieHash = (crypto.createHash('sha256')).update(cookie).digest('base64');
 
 		// check if the user_id and cookieHash EXIST in the database
-		const result = await conn.query("select user_id,username,email from `user` where user_id = ? and cookieHash = ?",
+		const result = await conn.query("select user_id,username,email from `user` where user_id = ? and cookieHash = ? and validate_code is null",
 			[user_id, cookieHash]);
 
 		conn.end();
@@ -56,7 +75,7 @@ module.exports = {
 
 		const passHash = (crypto.createHash('sha256')).update(password).digest('base64');
 
-		const result = await conn.query("select user_id,username,email from `user` where username = ? and passHash = ?",
+		const result = await conn.query("select user_id,username,email from `user` where username = ? and passHash = ? and validate_code is null",
 			[username, passHash]);
 
 		conn.end();

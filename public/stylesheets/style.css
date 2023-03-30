@@ -37,3 +37,11 @@ form.page-edit textarea {
 	width: 80%;
 	height: 300px;
 }
+
+li.active a {
+	text-decoration: none;
+}
+
+.profile span.title {
+	font-weight: bold;
+}

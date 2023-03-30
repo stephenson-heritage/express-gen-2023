@@ -32,10 +32,19 @@ module.exports = {
 
 
 	},
-	'getMenuItems': async function () {
+	'getMenuItems': async function (currentKey = null) {
 		let conn = await db.getConnection();
 		const result = await conn.query("select page_id,title,`key` from page where menu_order is not null order by menu_order");
 		conn.end();
+
+		if (currentKey != null) {
+			for (let i = 0; i < result.length; i++) {
+				if (result[i].key == currentKey) {
+					result[i].current = true;
+				}
+			}
+		}
+
 		return result;
 	},
 	'updatePage': async function (key, user_id, title, content) {

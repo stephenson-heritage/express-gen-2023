@@ -8,7 +8,7 @@ router.use(fileUpload());
 router.get('/', async (req, res) => {
 
 	const photos = await photo.getPhotos();
-	const menuItems = await page.getMenuItems();
+	const menuItems = await page.getMenuItems("photo");
 
 	//console.log(photos.rows);
 	// render template 'index.hbs', send the menu items as "menu", photo records as "data"

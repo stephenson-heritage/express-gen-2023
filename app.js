@@ -7,7 +7,7 @@ const auth = require('./modules/auth');
 
 
 const indexRouter = require('./routes/index');
-const booksRouter = require('./routes/books');
+const userRouter = require('./routes/user');
 const photoRouter = require('./routes/photo');
 
 
@@ -36,9 +36,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 //	run for every request that reaches this line
 app.use(auth);
 
+app.use('/user/', userRouter);
 app.use('/photo/', photoRouter);
+
 app.use('/', indexRouter);
-app.use('/books/', booksRouter);
+
 
 
 // catch 404 and forward to error handler

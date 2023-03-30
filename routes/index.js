@@ -80,7 +80,8 @@ let loadPage = async function (template, key, req, res, next) {
 	if (pg.status == false) {
 		next(); // no matching page, call next (go to next endpoint handler)
 	} else {
-		const menuItems = await page.getMenuItems(); // retrieve the menu items
+		const menuItems = await page.getMenuItems(key); // retrieve the menu items
+
 		//console.log(menuItems);
 		// there is a matching page (with key ==> "care")
 		res.render(template, { // render template 'index.hbs', send the page title, page content
